@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularjsMarkdownDemo', ['ngSanitize', 'ui.router'])
+angular.module('angularjsMarkdownDemo', ['ngSanitize', 'ui.router', 'hc.marked', 'emoji'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
@@ -11,4 +11,13 @@ angular.module('angularjsMarkdownDemo', ['ngSanitize', 'ui.router'])
 
     $urlRouterProvider.otherwise('/');
   })
+  .config(['markedProvider', function(markedProvider) {
+    markedProvider.setOptions({
+      gfm: true,
+      tables: true,
+      highlight: function (code) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+  }])
 ;
